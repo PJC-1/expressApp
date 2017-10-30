@@ -27,7 +27,16 @@ app.get('/todos', function(req, res){
 // API Endpoints //
 ///////////////////
 
-
+// GET Route for all todos
+app.get('/api/todos', function(req, res){
+  db.Todo.find({}, function(error, todos){
+    if(error){
+      console.log(error);
+    } else {
+      res.json(todos);
+    }
+  });
+});
 
 app.listen(3000, function(){
   console.log("now listening to port 3000...");

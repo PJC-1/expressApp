@@ -1,7 +1,10 @@
-console.log("testing allTodos.js...");
+var $todosList;
+var allTodos = [];
+
 
 $(document).ready(function(){
-  console.log("testing jquery...");
+
+  $todosList = $('#todoTarget');
 
   $.ajax({
     method: "GET",
@@ -13,9 +16,33 @@ $(document).ready(function(){
 });
 
 function onSuccess(todos){
-  console.log(todos);
+  allTodos = todos;
+  render();
 }
 
 function onError(error){
   console.log(error);
+}
+
+function render(){
+  $todosList.empty();
+
+  var todosHtml = getAllTodosHtml(allTodos);
+
+  $todosList.append(todosHtml);
+}
+
+function getAllTodosHtml(items){
+  return items.map(getTodoHtml).join("");
+}
+
+function getTodoHtml(item){
+  return `
+    <hr>
+    <p>
+      <b>${item.description}</b>
+      by ${item.author}
+      (<i>Difficulty Level: <strong>${item.difficutlyLevel}</strong></i>)
+    </p>
+  `;
 }

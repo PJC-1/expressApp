@@ -2,37 +2,37 @@ var db = require('./models');
 
 var todo_list = [
   {
-    author : "Jordane",
+    author : "Jerry",
     description : "Take dogs to the park.",
     difficutlyLevel : 3
   },
   {
-    author : "Sherry",
+    author : "Sam",
     description : "Do homework.",
     difficutlyLevel : 5
   },
   {
-    author : "Orhan",
+    author : "Orion",
     description : "Go to Las Vegas.",
     difficutlyLevel : 0
   },
   {
-    author : "Phill",
+    author : "Peter",
     description : "Teach class.",
     difficutlyLevel : 5
   },
   {
-    author : "Ama",
+    author : "Amy",
     description : "Watch T.V.",
     difficutlyLevel : 2
   },
   {
-    author : "Skip",
+    author : "Steve",
     description : "Watch T.V.",
     difficutlyLevel : 1
   },
   {
-    author : "Grace",
+    author : "Greg",
     description : "Go to Napa.",
     difficutlyLevel : 3
   }

@@ -23,6 +23,11 @@ app.get('/todos', function(req, res){
   res.sendFile('views/allTodos.html', {root : __dirname});
 });
 
+// GET Route for create a todo
+app.get('/createTodo', function(req, res){
+  res.sendFile('views/createTodo.html', {root : __dirname});
+});
+
 ///////////////////
 // API Endpoints //
 ///////////////////
@@ -34,6 +39,28 @@ app.get('/api/todos', function(req, res){
       console.log(error);
     } else {
       res.json(todos);
+    }
+  });
+});
+
+// POST Route to create todo
+app.post('/api/createTodo', function(req, res){
+  console.log(req.body);
+  var auth = req.body.author;
+  var desc = req.body.description;
+  var diff = req.body.difficutlyLevel;
+
+  var newTodo = new db.Todo({
+    author : auth,
+    description : desc,
+    difficutlyLevel : diff
+  });
+
+  newTodo.save(function(err, savedTodo){
+    if(err){
+      console.log(err);
+    } else {
+      res.json(savedTodo);
     }
   });
 });

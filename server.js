@@ -1,11 +1,12 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 
+
 var db = require('./models');
 
 var app = express();
 
-app.use(express.static('public'));
+app.use(express.static(__dirname + '/public'));
 
 app.use(bodyParser.urlencoded({ extended : true }));
 
@@ -16,6 +17,11 @@ app.use(bodyParser.urlencoded({ extended : true }));
 // GET Route for Root
 app.get('/', function(req, res){
   res.sendFile('views/index.html', {root : __dirname});
+});
+
+// GET Route for a single todo
+app.get('/todos/:id', function(req, res){
+  res.sendFile('views/todo.html', {root : __dirname});
 });
 
 // GET Route for all todos
@@ -39,6 +45,18 @@ app.get('/api/todos', function(req, res){
       console.log(error);
     } else {
       res.json(todos);
+    }
+  });
+});
+
+// GET Route for a single todo
+app.get('/api/todos/:id', function(req, res){
+  db.Todo.findById({_id:req.params.id}, function(err, result){
+    if(err){
+      console.log(err);
+    } else {
+      console.log(result);
+      res.json(result);
     }
   });
 });

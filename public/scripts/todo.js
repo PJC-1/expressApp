@@ -12,24 +12,48 @@ $(document).ready(function(){
     success: onSuccess,
     error: onError
   });
+
+  $("#todoTarget").on("click", ".delete-todo", function(event){
+    $.ajax({
+      method: "DELETE",
+      url: url,
+      data: id,
+      success: deleteSuccess,
+      error: deleteError
+    });
+  });
+
+  
 });
 
 function onSuccess(json){
   console.log(json);
   var output = `
-    <p>
-      <strong>author: </strong> ${json.author}
-    </p>
-    <p>
-      <strong>description: </strong> ${json.description}
-    </p>
-    <p>
-      <strong>difficulty: </strong> ${json.difficutlyLevel}
-    </p>
+    <div>
+      <p>
+        <strong>author: </strong> ${json.author}
+      </p>
+      <p>
+        <strong>description: </strong> ${json.description}
+      </p>
+      <p>
+        <strong>difficulty: </strong> ${json.difficutlyLevel}
+      </p>
+      <button class="btn btn-danger delete-todo todo" data-id="${json._id}">delete</button>
+    </div>
   `;
   $('#todoTarget').append(output);
 }
 
 function onError(error){
+  console.log(error);
+}
+
+function deleteSuccess(json){
+  alert("deleted item: "+json._id);
+  window.location.href = "/todos";
+}
+
+function deleteError(error){
   console.log(error);
 }

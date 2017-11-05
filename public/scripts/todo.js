@@ -23,7 +23,11 @@ $(document).ready(function(){
     });
   });
 
-  
+  $("#todoTarget").on("click", ".edit-todo", function(event){
+    window.location.href = "/todos/" + id + "/edit";
+  });
+
+
 });
 
 function onSuccess(json){
@@ -40,6 +44,7 @@ function onSuccess(json){
         <strong>difficulty: </strong> ${json.difficutlyLevel}
       </p>
       <button class="btn btn-danger delete-todo todo" data-id="${json._id}">delete</button>
+      <button class="btn btn-success edit-todo todo" data-id="${json._id}">edit</button>
     </div>
   `;
   $('#todoTarget').append(output);

@@ -24,6 +24,11 @@ app.get('/todos/:id', function(req, res){
   res.sendFile('views/todo.html', {root : __dirname});
 });
 
+// GET Route for edit single todo
+app.get('/todos/:id/edit', function(req, res){
+  res.sendFile('views/editTodo.html', {root : __dirname});
+});
+
 // GET Route for all todos
 app.get('/todos', function(req, res){
   res.sendFile('views/allTodos.html', {root : __dirname});
@@ -57,6 +62,32 @@ app.get('/api/todos/:id', function(req, res){
     } else {
       console.log(result);
       res.json(result);
+    }
+  });
+});
+
+// PUT Route to edit single todo
+app.put('/api/todos/:id', function(req, res){
+  // go to the DB and find the Todo, by using findById
+  db.Todo.findById({_id:req.params.id}, function(err, result){
+    if(err){
+      console.log(err);
+    } else {
+      console.log(result);
+      // set the properties of the original Todo to the new values (from the form).
+      result.author = req.body.author;
+      result.description = req.body.description;
+      result.difficutlyLevel = req.body.difficutlyLevel;
+      // save the updated Todo to the DB
+      result.save(function(err, updatedItem){
+        if(err){
+          console.log(err);
+        } else {
+          console.log(updatedItem);
+          // send the updated Todo to the client (res.json).
+          res.json(updatedItem);
+        }
+      });
     }
   });
 });
